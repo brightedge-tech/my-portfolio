@@ -90,18 +90,16 @@
         b.classList.toggle("done", k < i); b.classList.toggle("on", k === i);
       });
       panel.setAttribute("aria-labelledby", "ps-" + i);
-      panel.innerHTML = "<h3>" + (i + 1) + ". " + esc(steps[i].step) + "</h3><p>" + esc(steps[i].text) + "</p>";
+      panel.innerHTML = "<h3>" + (i + 1) + ". " + esc(steps[i].step) + "</h3><p>" + esc(steps[i].text) + "</p>" +
+        (steps[i].you ? '<dl class="proc-meta"><div><dt>What we need from you</dt><dd>' + esc(steps[i].you) + '</dd></div><div><dt>What you receive</dt><dd>' + esc(steps[i].get) + "</dd></div></dl>" : "");
       if (focus) rail.children[i].focus();
     }
     target.appendChild(rail); target.appendChild(panel); go(0);
   }
 
   function renderScope(target) {
-    var d = window.DELIVERY_SCOPE;
-    function ul(a) { return "<ul>" + a.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>"; }
-    target.innerHTML = '<div class="scope-col direct"><h3>Delivered directly by me</h3>' + ul(d.direct) + "</div>" +
-      '<div class="scope-col wider"><h3>Wider NSOMEX Group, team and partners</h3>' + ul(d.wider) + "</div>" +
-      '<p class="scope-note">' + esc(d.examples) + "</p>";
+    var d = window.DELIVERY_EXAMPLES;
+    target.innerHTML = "<p>" + esc(d.text) + "</p>";
   }
 
   /* ---------- service detail page ---------- */
@@ -121,7 +119,7 @@
       '<a class="btn b1" href="' + cUrl(s.slug) + '">Discuss this service</a></div><div class="svc-art">' + icon(s.icon, "art") + "</div></header>" +
       '<section class="block"><h2>What it includes</h2>' + list(s.includes) + "</section>" +
       '<section class="block"><h2>Key capabilities</h2>' + list(s.capabilities) + "</section>";
-    if (s.extra === "process") html += '<section class="block"><h2>The delivery process</h2><div id="process"></div></section><section class="block"><h2>Who delivers what</h2><div class="scope" id="scope"></div></section>';
+    if (s.extra === "process") html += '<section class="block"><h2>The delivery process</h2><div id="process"></div></section><section class="block"><h2>Examples</h2><div class="scope-note-block" id="scope"></div></section>';
     if (s.extra === "tech") html += '<section class="block"><h2>Technology ecosystem</h2><p class="muted">Platforms and technologies within the service offering. Not a list of certifications or partnerships.</p><div id="tech"></div></section>';
     else html += '<section class="block"><h2>Relevant technologies</h2><div class="pills">' + s.tech.map(function (t) { return "<span>" + esc(t) + "</span>"; }).join("") + "</div></section>";
     html += '<section class="block"><h2>Business value</h2>' + list(s.value) + "</section>" +

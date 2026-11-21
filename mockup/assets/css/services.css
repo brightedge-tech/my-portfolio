@@ -84,3 +84,6 @@ nav{flex-wrap:wrap}
 .form label{font-weight:700;display:grid;gap:6px}
 .form input,.form select,.form textarea{font:inherit;padding:14px;border:1.5px solid #c5d6f3;border-radius:12px;background:#fff;color:var(--navy)}
 @media(max-width:800px){.svc-hero,.scope{grid-template-columns:1fr}.svc-art{max-width:180px}.proc-rail{grid-template-columns:repeat(3,1fr)}.container{padding:16px 20px 60px}.page-hero{padding:30px 20px 0}.block{padding:24px}}
+.proc-meta{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}.proc-meta div{background:#fff;border-radius:12px;padding:14px}.proc-meta dt{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--blue);margin-bottom:4px}.proc-meta dd{color:var(--navy)}
+.scope-note-block p{color:var(--ink);line-height:1.6}
+@media(max-width:800px){.proc-meta{grid-template-columns:1fr}}

@@ -70,28 +70,33 @@ window.SERVICES = [
   {
     slug: "we-build-and-deliver", number: "07", title: "We Build & Deliver",
     icon: '<path d="M4 20 20 4M14 4h6v6"/><path d="M5 9a6 6 0 0 1 6-6M15 19a6 6 0 0 0 6-6" opacity=".6"/>',
-    short: "How ideas move from concept to delivery: discover, design, build, test, deploy, support.",
-    headline: "From concept to delivery, step by step.",
-    intro: "A clear delivery process keeps projects predictable. This is how an idea moves from first conversation to a supported, running system.",
-    includes: ["Discovery of goals, constraints and scope", "Solution and architecture design", "Implementation and automation", "Testing and validation", "Deployment and release", "Ongoing support"],
-    capabilities: ["A defined sequence with clear hand-offs", "Transparent scope at every stage", "Automation built into delivery", "Support after go-live"],
-    tech: ["GitHub Actions", "Docker", "Kubernetes", "Terraform", "AWS"],
-    value: ["Predictable delivery stages", "Clear expectations about who delivers what", "A system that is supported after launch"],
+    short: "Turn your idea, business requirement or technical challenge into a working solution: discover, design, build, test, deploy and support.",
+    headline: "From your idea to a working solution.",
+    intro: "Bring us an idea, a business requirement or a technical challenge. We work with you to understand it, design the right solution, build and test it, put it into production and support it afterwards, with clear communication at every stage.",
+    includes: ["Requirements discovery and scoping", "Solution and architecture design", "Implementation of the agreed solution", "Quality assurance and testing", "Deployment to your environment", "Documentation, handover and ongoing support"],
+    capabilities: ["Turning loosely defined needs into clear, agreed requirements", "Cloud, infrastructure, automation and application solutions", "Delivery in reviewable stages so you can see progress", "Automated build, test and deployment pipelines", "Support and improvement after go-live"],
+    tech: ["AWS", "Terraform", "Docker", "Kubernetes", "GitHub Actions", "Python"],
+    value: ["One accountable team from first conversation to live system", "Requirements and scope agreed before build begins", "Tested, documented solutions that your team can operate", "Support available once the solution is live"],
     extra: "process"
   }
 ];
 
 window.PROCESS = [
-  { step: "Discover", text: "Understand goals, users, constraints and the current environment before proposing anything." },
-  { step: "Design", text: "Shape the architecture, delivery approach and scope, and agree them before building." },
-  { step: "Build", text: "Implement infrastructure, automation and application changes in small, reviewable steps." },
-  { step: "Test", text: "Validate functionality, security and reliability before anything reaches production." },
-  { step: "Deploy", text: "Release through an automated, repeatable pipeline with a rollback path." },
-  { step: "Support", text: "Monitor, maintain and improve the system after launch." }
+  { step: "Discover", text: "We start by listening. Through conversations and questions we capture your goals, requirements, users, constraints, budget and timeline, and review any existing systems. You receive a clear, written understanding of the problem and the agreed scope.",
+    you: "Share your goals, current setup and constraints.", get: "Agreed requirements and scope." },
+  { step: "Design", text: "We turn the requirements into a solution architecture: the technologies, infrastructure, security approach and delivery plan that best fit your needs. We explain the options and trade-offs in plain language and agree the approach with you before building.",
+    you: "Review options and approve the approach.", get: "Solution architecture and delivery plan." },
+  { step: "Build", text: "We implement the agreed solution in small, reviewable steps, using automation and infrastructure as code where it helps, so the result is consistent and repeatable. You can see progress along the way rather than waiting for a single big reveal.",
+    you: "Give feedback at agreed checkpoints.", get: "Working, reviewable increments." },
+  { step: "Test", text: "Quality assurance happens before anything goes live: functional checks, security and reliability checks, and validation against the requirements we agreed together. Issues are fixed before release.",
+    you: "Confirm the solution meets your requirements.", get: "A validated solution and test results." },
+  { step: "Deploy", text: "We release the solution to your environment through a controlled, repeatable process with a plan for rolling back if needed, and confirm it runs as expected once live.",
+    you: "Agree the release timing.", get: "The solution live in production." },
+  { step: "Support", text: "After go-live we provide documentation and handover, monitor how the solution performs, fix issues and help you improve it over time. The level of ongoing support is agreed with you.",
+    you: "Raise issues and new needs as they arise.", get: "Documentation, support and improvements." }
 ];
 
-window.DELIVERY_SCOPE = {
-  direct: ["Cloud, DevOps, infrastructure and automation work described on the other service pages", "Discovery, design, implementation, testing, deployment and support of that work"],
-  wider: ["Capabilities of the wider NSOMEX Group, such as other disciplines or additional people, are only included when explicitly scoped and agreed", "Partner resources are named and agreed per engagement, never assumed"],
-  examples: "NSOMEX Group and NSOMEX Connect are referenced as example contexts for this delivery approach. Specific capabilities, products or project details will be added only once confirmed."
+window.DELIVERY_EXAMPLES = {
+  title: "Examples",
+  text: "This delivery approach applies to products and platforms such as NSOMEX Group and NSOMEX Connect. Their full details will be presented as dedicated case studies in the Projects section."
 };
