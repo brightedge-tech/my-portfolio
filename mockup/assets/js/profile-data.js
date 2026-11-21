@@ -2,7 +2,7 @@
    - Social links: leave url null to hide the link (never use "#").
    - photo: path relative to site root (e.g. "assets/img/profile.jpg"); null shows a placeholder.
    - cvPdf: path to the real PDF (e.g. "assets/cv/ayeah-derrick-nsom-m-cv.pdf"); null hides the download button.
-   - experience / education / certifications: empty arrays show a "to be added" note.
+   - education / certifications: empty arrays show a "to be added" note. Experience and skills live in experience-data.js and skills-data.js.
      Entry shapes: experience {role, org, period, bullets[]}, education {qualification, institution, period},
      certifications {name, issuer, year}. */
 (function (g) {
@@ -30,16 +30,6 @@
       { id: "medium", label: "Medium", url: null },
       { id: "nsomex", label: "NSOMEX website", url: "https://www.nsomex.com" }
     ],
-    skillsNote: "Technologies used in the featured projects. Edit or extend this list.",
-    skills: [
-      { group: "Cloud and infrastructure", items: ["AWS", "EC2", "Auto Scaling Groups", "AWS EKS", "Terraform"] },
-      { group: "CI/CD and delivery", items: ["Jenkins", "Argo CD", "Helm"] },
-      { group: "Containers", items: ["Docker", "Kubernetes"] },
-      { group: "Security and quality", items: ["SonarQube", "OWASP Dependency Check", "Trivy"] },
-      { group: "Monitoring", items: ["Prometheus", "Grafana"] },
-      { group: "Application and data", items: ["React Native", "Expo", "Supabase", "PostgreSQL"] }
-    ],
-    experience: [],
     education: [],
     certifications: []
   };

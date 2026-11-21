@@ -1,6 +1,6 @@
 /* One-off generator for static page shells. Run: node gen.js */
 const fs = require("fs"), path = require("path");
-global.window = {}; require("./assets/js/services-data.js"); require("./assets/js/projects-data.js"); require("./assets/js/profile-data.js");
+global.window = {}; require("./assets/js/services-data.js"); require("./assets/js/projects-data.js"); require("./assets/js/profile-data.js"); require("./assets/js/skills-data.js");
 const P = window.PROJECTS;
 const S = window.SERVICES;
 
@@ -16,13 +16,13 @@ function nav(root, active) {
     ${a(root + "projects/", "Projects", "projects")}
     ${a(root + "services/", "Services", "services")}
     ${a("#", "Blog", "blog")}
-    ${a("#", "Experience", "exp")}
-    ${a("#", "Skills", "skills")}
+    ${a(root + "experience/", "Experience", "exp")}
+    ${a(root + "skills/", "Skills", "skills")}
     <li><a class="cta" href="${root}contact.html">Contact</a></li>
   </ul>
 </nav>`;
 }
-function page({ root, title, desc, active, bodyAttr = "", main, projects = false, profile = false }) {
+function page({ root, title, desc, active, bodyAttr = "", main, projects = false, profile = false, scripts = [] }) {
   return `<!DOCTYPE html>
 <html lang="en" data-root="${root}">
 <head>
@@ -34,6 +34,7 @@ function page({ root, title, desc, active, bodyAttr = "", main, projects = false
 <link rel="stylesheet" href="${root}assets/css/services.css">
 <link rel="stylesheet" href="${root}assets/css/projects.css">
 <link rel="stylesheet" href="${root}assets/css/profile.css">
+<link rel="stylesheet" href="${root}assets/css/skills.css">
 </head>
 <body ${bodyAttr}>
 <a class="skip" href="#main">Skip to content</a>
@@ -47,7 +48,8 @@ ${main}
 <script src="${root}assets/js/tech-data.js"></script>
 <script src="${root}assets/js/app.js"></script>${projects ? `
 <script src="${root}assets/js/projects-data.js"></script>
-<script src="${root}assets/js/projects.js"></script>` : ""}${profile ? `
+<script src="${root}assets/js/projects.js"></script>` : ""}${scripts.map(s => `
+<script src="${root}assets/js/${s}.js"></script>`).join("")}${profile ? `
 <script src="${root}assets/js/projects-data.js"></script>
 <script src="${root}assets/js/profile-data.js"></script>
 <script src="${root}assets/js/profile.js"></script>` : ""}
@@ -87,16 +89,32 @@ P.forEach(p => w(`projects/${p.slug}/index.html`, page({
 })));
 
 w("about/index.html", page({
-  root: "../", active: "about", profile: true, bodyAttr: 'data-page="about"',
+  root: "../", active: "about", profile: true, scripts: ["skills-data", "experience-data"], bodyAttr: 'data-page="about"',
   title: "About | Ayeah Derrick Nsom-M – Cloud & DevOps Engineer",
   desc: "About Ayeah Derrick Nsom-M, Cloud & DevOps Engineer: cloud engineering, infrastructure automation and delivery.",
   main: `<div class="container" id="profile-root"><noscript><p class="error">Please enable JavaScript to view this page.</p></noscript></div>`
 }));
 w("cv/index.html", page({
-  root: "../", active: "cv", profile: true, bodyAttr: 'data-page="cv"',
+  root: "../", active: "cv", profile: true, scripts: ["skills-data", "experience-data"], bodyAttr: 'data-page="cv"',
   title: "CV | Ayeah Derrick Nsom-M – Cloud & DevOps Engineer",
   desc: "Curriculum vitae of Ayeah Derrick Nsom-M, Cloud & DevOps Engineer.",
   main: `<div class="container" id="profile-root"><noscript><p class="error">Please enable JavaScript to view this page.</p></noscript></div>`
+}));
+
+w("experience/index.html", page({
+  root: "../", active: "exp", scripts: ["experience-data", "experience"],
+  title: "Experience | Ayeah Derrick Nsom-M – Cloud & DevOps Engineer",
+  desc: "Professional experience of Ayeah Derrick Nsom-M, Cloud & DevOps Engineer.",
+  main: `<div class="page-hero"><p class="kicker">Experience</p><h1>Professional experience.</h1><p>Ayeah Derrick Nsom-M — Cloud &amp; DevOps Engineer.</p></div>
+<div class="container"><noscript><p class="error">Please enable JavaScript to view this page.</p></noscript><div id="experience-root"></div></div>`
+}));
+w("skills/index.html", page({
+  root: "../", active: "skills", scripts: ["projects-data", "skills-data", "skills"],
+  title: "Skills | Ayeah Derrick Nsom-M – Cloud & DevOps Engineer",
+  desc: "Technical skills across cloud, DevOps, containers, infrastructure as code, monitoring, security and development, linked to portfolio projects.",
+  main: `<div class="page-hero"><p class="kicker">Skills</p><h1>Technical skills.</h1><p>Technologies demonstrated across my portfolio projects, each linked to the case study that shows it. No proficiency levels are claimed.</p></div>
+<div class="container"><noscript><p class="error">Please enable JavaScript to view the skills.</p></noscript><div id="skills-root"></div>
+<section class="cta-band sk-cta"><h2>Put these capabilities to work</h2><p>See how they apply to practical client solutions.</p><a class="btn" href="../services/">Explore my services</a></section></div>`
 }));
 
 w("contact.html", page({
