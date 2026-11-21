@@ -1,27 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-root="">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ayeah Derrick Nsom-M | Cloud &amp; DevOps Engineer</title>
+<meta name="description" content="Portfolio of Ayeah Derrick Nsom-M, Cloud and DevOps Engineer.">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="assets/css/services.css">
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 <div class="glow g1"></div><div class="glow g2"></div>
 
 <nav aria-label="Primary">
-  <div class="logo">Ayeah<span>.</span>dev<i></i></div>
-  <ul>
+  <a class="logo" href="index.html" style="text-decoration:none;color:inherit">Ayeah<span>.</span>dev<i></i></a>
+  <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu">Menu</button>
+  <ul id="nav-menu">
     <li><a class="active" href="#">Welcome</a></li>
     <li><a href="#">CV</a></li>
     <li><a href="#">Projects</a></li>
+    <li><a href="services/">Services</a></li>
     <li><a href="#">Blog</a></li>
     <li><a href="#">Experience</a></li>
     <li><a href="#">Skills</a></li>
-    <li><a class="cta" href="#">Contact</a></li>
+    <li><a class="cta" href="contact.html">Contact</a></li>
   </ul>
 </nav>
 
+<main id="main">
 <header class="hero">
   <div>
     <span class="eyebrow"><b></b> Available for cloud &amp; platform engagements</span>
@@ -30,7 +36,7 @@
       <ul><li>Scalable AWS architectures</li><li>Kubernetes platforms</li><li>Automated CI/CD pipelines</li><li>Infrastructure as Code</li></ul>
     </div>
     <p class="intro">I design, automate and operate resilient cloud infrastructure, turning slow, manual releases into secure, observable and cost-efficient delivery pipelines that teams can trust in production.</p>
-    <div class="btns"><a class="btn b1" href="#">Explore My Projects →</a><a class="btn b2" href="#">⬇ Download My CV</a></div>
+    <div class="btns"><a class="btn b1" href="services/">Explore My Services →</a><a class="btn b2" href="#">⬇ Download My CV</a></div>
   </div>
 
   <div class="stage">
@@ -64,6 +70,11 @@
   </div>
 </section>
 
+<section class="home-services" aria-labelledby="hs-title">
+  <div class="head"><div><p class="kicker">Services</p><h2 id="hs-title">How I can help</h2></div><a class="btn b1" href="services/">View all services</a></div>
+  <div class="svc-grid" id="services-grid"></div>
+</section>
+
 <section>
   <h2>From commit to production, automated.</h2>
   <p class="sub">A repeatable CI/CD pipeline built for speed, safety and visibility.</p>
@@ -76,6 +87,10 @@
   </div>
 </section>
 
+</main>
 <footer>© Ayeah Derrick Nsom-M · Cloud &amp; DevOps Engineer</footer>
+<script src="assets/js/services-data.js"></script>
+<script src="assets/js/tech-data.js"></script>
+<script src="assets/js/app.js"></script>
 </body>
 </html>
