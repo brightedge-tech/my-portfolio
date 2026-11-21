@@ -1,6 +1,6 @@
 /* One-off generator for static page shells. Run: node gen.js */
 const fs = require("fs"), path = require("path");
-global.window = {}; require("./assets/js/services-data.js"); require("./assets/js/projects-data.js"); require("./assets/js/profile-data.js"); require("./assets/js/skills-data.js");
+global.window = {}; require("./assets/js/services-data.js"); require("./assets/js/projects-data.js"); require("./assets/js/profile-data.js"); require("./assets/js/skills-data.js"); require("./assets/js/blog-data.js");
 const P = window.PROJECTS;
 const S = window.SERVICES;
 
@@ -15,14 +15,14 @@ function nav(root, active) {
     ${a(root + "cv/", "CV", "cv")}
     ${a(root + "projects/", "Projects", "projects")}
     ${a(root + "services/", "Services", "services")}
-    ${a("#", "Blog", "blog")}
+    ${a(root + "blog/", "Blog", "blog")}
     ${a(root + "experience/", "Experience", "exp")}
     ${a(root + "skills/", "Skills", "skills")}
     <li><a class="cta" href="${root}contact.html">Contact</a></li>
   </ul>
 </nav>`;
 }
-function page({ root, title, desc, active, bodyAttr = "", main, projects = false, profile = false, scripts = [] }) {
+function page({ root, title, desc, active, head = "", bodyAttr = "", main, projects = false, profile = false, scripts = [] }) {
   return `<!DOCTYPE html>
 <html lang="en" data-root="${root}">
 <head>
@@ -35,6 +35,8 @@ function page({ root, title, desc, active, bodyAttr = "", main, projects = false
 <link rel="stylesheet" href="${root}assets/css/projects.css">
 <link rel="stylesheet" href="${root}assets/css/profile.css">
 <link rel="stylesheet" href="${root}assets/css/skills.css">
+<link rel="stylesheet" href="${root}assets/css/blog.css">
+${head}
 </head>
 <body ${bodyAttr}>
 <a class="skip" href="#main">Skip to content</a>
@@ -43,7 +45,7 @@ ${nav(root, active)}
 <main id="main">
 ${main}
 </main>
-<footer>© Ayeah Derrick Nsom-M · Cloud &amp; DevOps Engineer</footer>
+<footer>© Ayeah Derrick Nsom-M · Cloud &amp; DevOps Engineer · <a href="${root}blog/">Blog</a></footer>
 <script src="${root}assets/js/services-data.js"></script>
 <script src="${root}assets/js/tech-data.js"></script>
 <script src="${root}assets/js/app.js"></script>${projects ? `
@@ -131,4 +133,26 @@ w("contact.html", page({
 <p class="muted">This form is a placeholder: a delivery endpoint (email service or API) still needs to be connected.</p>
 </form></div>`
 }));
+const B = window.BLOG, H = (t) => String(t == null ? "" : t).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const local = B.articles.filter((a) => a.published && a.platform === "local");
+w("blog/index.html", page({
+  root: "../", active: "blog", scripts: ["blog-data", "blog"],
+  title: "Blog | Ayeah Derrick Nsom-M – Cloud & DevOps Engineer",
+  desc: "Practical insights, tutorials and engineering experiences on cloud computing, AWS, DevOps, infrastructure automation, cybersecurity and modern application development.",
+  head: `<meta property="og:type" content="website">\n<meta property="og:title" content="Blog | Ayeah Derrick Nsom-M">\n<meta property="og:description" content="Cloud, AWS, DevOps and infrastructure engineering insights.">`,
+  main: `<div class="page-hero bl-hero"><div><p class="kicker">Blog</p><h1>Engineering Ideas. Building Solutions. Sharing Knowledge.</h1><p>Explore practical insights, tutorials and engineering experiences covering cloud computing, AWS, DevOps, infrastructure automation, cybersecurity and modern application development.</p><a class="btn b1" href="#articles">Explore articles</a></div><svg class="bl-art" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="14" y="20" width="92" height="80" rx="10"/><path d="M14 40h92M44 62l-12 10 12 10M76 62l12 10-12 10M66 58l-12 28"/><circle cx="26" cy="30" r="2"/><circle cx="36" cy="30" r="2"/></svg></div>
+<div class="container"><noscript><p class="error">Please enable JavaScript to view the articles.</p></noscript><div id="blog-root"></div></div>`
+}));
+local.forEach((a) => {
+  const proj = a.project && P.filter((p) => p.slug === a.project)[0];
+  const rel = local.filter((x) => x.slug !== a.slug && x.category === a.category).slice(0, 3);
+  const blocks = (a.content || []).map((b) => b.type === "h2" || b.type === "h3" ? `<${b.type}>${H(b.text)}</${b.type}>` : b.type === "ul" ? `<ul>${b.items.map((i) => `<li>${H(i)}</li>`).join("")}</ul>` : b.type === "code" ? `<pre><code>${H(b.text)}</code></pre>` : b.type === "img" ? `<figure><img src="../../${H(b.src)}" alt="${H(b.alt)}" loading="lazy">${b.caption ? `<figcaption>${H(b.caption)}</figcaption>` : ""}</figure>` : `<p>${H(b.text)}</p>`).join("\n");
+  const ld = { "@context": "https://schema.org", "@type": "BlogPosting", headline: a.title, description: a.description, datePublished: a.date, author: { "@type": "Person", name: a.author } };
+  w(`blog/${a.slug}/index.html`, page({
+    root: "../../", active: "blog",
+    title: `${a.title} | Blog | Ayeah Derrick Nsom-M`, desc: H(a.description),
+    head: `<meta property="og:type" content="article">\n<meta property="og:title" content="${H(a.title)}">\n<meta property="og:description" content="${H(a.description)}">${a.cover ? `\n<meta property="og:image" content="../../${H(a.cover)}">` : ""}\n<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, "\\u003c")}</script>`,
+    main: `<article class="container bl-post"><p><a class="svc-link" href="../">← Back to Blog</a></p><p class="bl-cat">${H(a.category)}</p><h1>${H(a.title)}</h1><p class="lead">${H(a.description)}</p><div class="bl-meta"><span>${H(a.author)}</span><span>${H(a.date)}</span><span>${H(a.readingTime)}</span></div>${a.cover ? `<div class="pj-cover"><img src="../../${H(a.cover)}" alt="${H(a.coverAlt)}"></div>` : ""}<div class="bl-prose">${blocks}</div><div class="bl-actions"><a class="btn b2" href="https://twitter.com/intent/tweet?text=${encodeURIComponent(a.title)}" target="_blank" rel="noopener noreferrer">Share on X</a>${proj ? `<a class="btn b1" href="../../projects/${proj.slug}/">Related project: ${H(proj.title)}</a>` : ""}</div>${rel.length ? `<section class="bl-related"><h2>Related articles</h2><ul>${rel.map((r) => `<li><a href="../${r.slug}/">${H(r.title)}</a></li>`).join("")}</ul></section>` : ""}</article>`
+  }));
+});
 console.log("generated");
