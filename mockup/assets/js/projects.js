@@ -75,7 +75,7 @@
     try {
       var g = $("#projects-grid"); if (g) overview(g);
       var s = document.body.getAttribute("data-project"); if (s) detail(s);
-    } catch (e) {
+    } catch {
       var r = $("#project-root") || $("#projects-grid");
       if (r) r.innerHTML = '<p class="error" role="alert">Sorry, this content could not be loaded. Please refresh the page.</p>';
     }

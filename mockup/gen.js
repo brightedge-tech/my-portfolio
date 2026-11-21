@@ -1,6 +1,6 @@
 /* One-off generator for static page shells. Run: node gen.js */
 const fs = require("fs"), path = require("path");
-global.window = {}; require("./assets/js/services-data.js"); require("./assets/js/projects-data.js");
+global.window = {}; require("./assets/js/services-data.js"); require("./assets/js/projects-data.js"); require("./assets/js/profile-data.js");
 const P = window.PROJECTS;
 const S = window.SERVICES;
 
@@ -11,7 +11,8 @@ function nav(root, active) {
   <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu">Menu</button>
   <ul id="nav-menu">
     ${a(root + "index.html", "Welcome", "welcome")}
-    ${a("#", "CV", "cv")}
+    ${a(root + "about/", "About", "about")}
+    ${a(root + "cv/", "CV", "cv")}
     ${a(root + "projects/", "Projects", "projects")}
     ${a(root + "services/", "Services", "services")}
     ${a("#", "Blog", "blog")}
@@ -21,7 +22,7 @@ function nav(root, active) {
   </ul>
 </nav>`;
 }
-function page({ root, title, desc, active, bodyAttr = "", main, projects = false }) {
+function page({ root, title, desc, active, bodyAttr = "", main, projects = false, profile = false }) {
   return `<!DOCTYPE html>
 <html lang="en" data-root="${root}">
 <head>
@@ -32,6 +33,7 @@ function page({ root, title, desc, active, bodyAttr = "", main, projects = false
 <link rel="stylesheet" href="${root}styles.css">
 <link rel="stylesheet" href="${root}assets/css/services.css">
 <link rel="stylesheet" href="${root}assets/css/projects.css">
+<link rel="stylesheet" href="${root}assets/css/profile.css">
 </head>
 <body ${bodyAttr}>
 <a class="skip" href="#main">Skip to content</a>
@@ -45,7 +47,10 @@ ${main}
 <script src="${root}assets/js/tech-data.js"></script>
 <script src="${root}assets/js/app.js"></script>${projects ? `
 <script src="${root}assets/js/projects-data.js"></script>
-<script src="${root}assets/js/projects.js"></script>` : ""}
+<script src="${root}assets/js/projects.js"></script>` : ""}${profile ? `
+<script src="${root}assets/js/projects-data.js"></script>
+<script src="${root}assets/js/profile-data.js"></script>
+<script src="${root}assets/js/profile.js"></script>` : ""}
 </body>
 </html>
 `;
@@ -80,6 +85,19 @@ P.forEach(p => w(`projects/${p.slug}/index.html`, page({
   desc: p.short,
   main: `<div class="container" id="project-root"><noscript><p class="error">Please enable JavaScript to view this project.</p></noscript></div>`
 })));
+
+w("about/index.html", page({
+  root: "../", active: "about", profile: true, bodyAttr: 'data-page="about"',
+  title: "About | Ayeah Derrick Nsom-M – Cloud & DevOps Engineer",
+  desc: "About Ayeah Derrick Nsom-M, Cloud & DevOps Engineer: cloud engineering, infrastructure automation and delivery.",
+  main: `<div class="container" id="profile-root"><noscript><p class="error">Please enable JavaScript to view this page.</p></noscript></div>`
+}));
+w("cv/index.html", page({
+  root: "../", active: "cv", profile: true, bodyAttr: 'data-page="cv"',
+  title: "CV | Ayeah Derrick Nsom-M – Cloud & DevOps Engineer",
+  desc: "Curriculum vitae of Ayeah Derrick Nsom-M, Cloud & DevOps Engineer.",
+  main: `<div class="container" id="profile-root"><noscript><p class="error">Please enable JavaScript to view this page.</p></noscript></div>`
+}));
 
 w("contact.html", page({
   root: "", active: "contact",
