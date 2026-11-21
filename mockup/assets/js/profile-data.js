@@ -13,7 +13,7 @@
     location: null,
     email: "derricknsom0@gmail.com",
     phone: "+86 139 4902 6940",
-    photo: null,
+    photo: "assets/img/profile.jpg",
     photoAlt: "Portrait of Ayeah Derrick Nsom-M",
     cvPdf: null,
     intro: "I am a Cloud & DevOps Engineer focused on cloud engineering, infrastructure automation and reliable delivery workflows. My work covers cloud architecture, CI/CD and deployment pipelines, application infrastructure and modernization, and building technology solutions through to delivery.",
