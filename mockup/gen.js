@@ -1,6 +1,6 @@
 /* One-off generator for static page shells. Run: node gen.js */
 const fs = require("fs"), path = require("path");
-global.window = {}; require("./assets/js/services-data.js"); require("./assets/js/projects-data.js"); require("./assets/js/profile-data.js"); require("./assets/js/skills-data.js"); require("./assets/js/blog-data.js");
+global.window = {}; require("./assets/js/services-data.js"); require("./assets/js/projects-data.js"); require("./assets/js/profile-data.js"); require("./assets/js/skills-data.js"); require("./assets/js/blog-data.js"); require("./assets/js/contact-data.js");
 const P = window.PROJECTS;
 const S = window.SERVICES;
 
@@ -18,7 +18,7 @@ function nav(root, active) {
     ${a(root + "blog/", "Blog", "blog")}
     ${a(root + "experience/", "Experience", "exp")}
     ${a(root + "skills/", "Skills", "skills")}
-    <li><a class="cta" href="${root}contact.html">Contact</a></li>
+    <li><a class="cta" href="${root}contact/">Contact</a></li>
   </ul>
 </nav>`;
 }
@@ -36,6 +36,7 @@ function page({ root, title, desc, active, head = "", bodyAttr = "", main, proje
 <link rel="stylesheet" href="${root}assets/css/profile.css">
 <link rel="stylesheet" href="${root}assets/css/skills.css">
 <link rel="stylesheet" href="${root}assets/css/blog.css">
+<link rel="stylesheet" href="${root}assets/css/contact.css">
 ${head}
 </head>
 <body ${bodyAttr}>
@@ -119,20 +120,19 @@ w("skills/index.html", page({
 <section class="cta-band sk-cta"><h2>Put these capabilities to work</h2><p>See how they apply to practical client solutions.</p><a class="btn" href="../services/">Explore my services</a></section></div>`
 }));
 
-w("contact.html", page({
-  root: "", active: "contact",
-  title: "Contact | Ayeah Derrick Nsom-M",
-  desc: "Get in touch with Ayeah Derrick Nsom-M about cloud and DevOps services.",
-  main: `<div class="page-hero"><p class="kicker">Contact</p><h1>Let's discuss your project.</h1><p>Choose the service you are interested in and tell me a little about it.</p></div>
-<div class="container"><form class="form" id="contact-form" action="mailto:" method="post" enctype="text/plain">
-<label>Name<input name="name" required autocomplete="name"></label>
-<label>Email<input name="email" type="email" required autocomplete="email"></label>
-<label>Service<select name="service" id="contact-service"><option value="">General enquiry</option></select></label>
-<label>Message<textarea name="message" rows="5" required></textarea></label>
-<button class="btn b1" type="submit" disabled aria-disabled="true">Sending not yet connected</button>
-<p class="muted">This form is a placeholder: a delivery endpoint (email service or API) still needs to be connected.</p>
-</form></div>`
+w("contact/index.html", page({
+  root: "../", active: "contact", scripts: ["contact-data", "profile-data", "contact"],
+  title: "Contact | Ayeah Derrick Nsom-M \u2013 Cloud & DevOps Engineer",
+  desc: "Contact Ayeah Derrick Nsom-M about cloud engineering, DevOps, infrastructure automation and technology services.",
+  head: `<meta property="og:type" content="website">\n<meta property="og:title" content="Contact | Ayeah Derrick Nsom-M">\n<meta property="og:description" content="Let's discuss cloud engineering, DevOps and technology projects.">`,
+  main: `<div class="page-hero ct-hero"><div><p class="kicker">Contact</p><h1>Let's Build Something Great Together.</h1><p>Have a project, an opportunity or an idea you'd like to bring to life? Let's discuss how cloud engineering, DevOps and modern technology can help you achieve your goals.</p><a class="btn b1" href="#contact-form-section">Start a conversation</a></div><svg class="ct-art" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="12" y="26" width="96" height="68" rx="10"/><path d="M14 32l46 34 46-34"/></svg></div>
+<div class="container"><noscript><p class="error">Please enable JavaScript to use the contact form, or email me directly at ${window.CONTACT.emails[0].address}.</p></noscript><div id="contact-root"></div>
+<section class="cta-band" style="margin-top:40px"><h2>Not sure what you need yet?</h2><a class="btn" href="../services/">Explore my services</a></section></div>`
 }));
+w("contact.html", `<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><title>Contact | Ayeah Derrick Nsom-M</title><meta http-equiv="refresh" content="0; url=contact/"><link rel="canonical" href="contact/"><script>location.replace("contact/" + location.search + location.hash)</script></head><body><p>Redirecting to <a href="contact/">the contact page</a>.</p></body></html>
+`);
+
 const B = window.BLOG, H = (t) => String(t == null ? "" : t).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const local = B.articles.filter((a) => a.published && a.platform === "local");
 w("blog/index.html", page({

@@ -34,7 +34,7 @@
     h += sec("do", "What I do", '<ul class="tags">' + window.SERVICES.map(function (s) { return '<li><a href="' + ROOT + "services/" + s.slug + '/">' + esc(s.title) + "</a></li>"; }).join("") + '</ul><p class="muted" style="margin-top:14px"><a class="svc-link" href="' + ROOT + 'services/">Explore all services <span aria-hidden="true">\u2192</span></a></p>');
     var pj = window.PROJECTS.filter(function (p) { return p.published && p.featured; });
     h += sec("work", "Featured work", '<div class="div-grid">' + pj.map(function (p) { return '<div class="div-card"><span class="svc-num">PROJECT ' + p.number + '</span><h3><a href="' + ROOT + "projects/" + p.slug + '/">' + esc(p.title) + "</a></h3></div>"; }).join("") + '</div><p style="margin-top:14px"><a class="svc-link" href="' + ROOT + 'projects/">All projects <span aria-hidden="true">\u2192</span></a></p>');
-    h += '<section class="cta-band"><h2>Let\u2019s talk about your project</h2><p>Tell me what you are trying to build or improve.</p><a class="btn" href="' + ROOT + 'contact.html">Contact me</a></section>';
+    h += '<section class="cta-band"><h2>Let\u2019s talk about your project</h2><p>Tell me what you are trying to build or improve.</p><a class="btn" href="' + ROOT + "contact/">Contact me</a></section>';
     r.innerHTML = h;
   }
 

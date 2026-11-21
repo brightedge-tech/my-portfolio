@@ -11,7 +11,7 @@
     name: "Ayeah Derrick Nsom-M",
     title: "Cloud & DevOps Engineer",
     location: null,
-    email: "derricknsom0@gmail.com",
+    email: "ayeahderick@gmail.com",
     phone: "+86 139 4902 6940",
     photo: "assets/img/profile.jpg",
     photoAlt: "Portrait of Ayeah Derrick Nsom-M",
@@ -28,7 +28,7 @@
       ["Solving practical problems", "Start from the business and technical problem, then pick the tools."]
     ],
     social: [
-      { id: "linkedin", label: "LinkedIn", url: "https://linkedin.com/in/derrick-nsom-m-5332aa388" },
+      { id: "linkedin", label: "LinkedIn", url: "https://www.linkedin.com/in/ayeah-derrick-nsom-m-5332aa388" },
       { id: "github", label: "GitHub", url: "https://github.com/brightedge-tech" },
       { id: "medium", label: "Medium", url: null },
       { id: "nsomex", label: "NSOMEX website", url: "https://www.nsomex.com" }

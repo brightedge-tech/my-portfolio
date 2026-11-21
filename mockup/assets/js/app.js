@@ -13,7 +13,7 @@
   function icon(path, cls) { return '<svg class="' + (cls || "ico") + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + path + "</svg>"; }
   function bySlug(slug) { return window.SERVICES.filter(function (s) { return s.slug === slug; })[0]; }
   function sUrl(slug) { return ROOT + "services/" + slug + "/"; }
-  function cUrl(slug) { return ROOT + "contact.html" + (slug ? "?service=" + encodeURIComponent(slug) : ""); }
+  function cUrl(slug) { return ROOT + "contact/" + (slug ? "?service=" + encodeURIComponent(slug) : ""); }
 
   /* ---------- navigation (shared, with mobile toggle) ---------- */
   function initNav() {

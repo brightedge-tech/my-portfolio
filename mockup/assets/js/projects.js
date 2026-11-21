@@ -67,7 +67,7 @@
     h += sec("results", "Results", list(p.results));
     var rel = p.related.map(bySlug).filter(Boolean);
     h += sec("related", "Related projects", rel.length ? '<ul class="cs-list rel">' + rel.map(function (x) { return '<li><a href="' + url(x.slug) + '">' + esc(x.title) + "</a></li>"; }).join("") + "</ul>" : "");
-    h += '<section class="cta-band"><h2>Interested in similar work?</h2><p>Tell me about your project.</p><a class="btn" href="' + ROOT + 'contact.html">Contact me</a></section>';
+    h += '<section class="cta-band"><h2>Interested in similar work?</h2><p>Tell me about your project.</p><a class="btn" href="' + ROOT + "contact/">Contact me</a></section>';
     r.innerHTML = h;
   }
 

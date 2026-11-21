@@ -1,0 +1,27 @@
+/* Contact page. Reuses .form-like inputs, .page-hero, .container, .btn, .cta-band, .social, .tags from existing CSS. */
+.ct-hero{display:grid;grid-template-columns:1.3fr .7fr;gap:30px;align-items:center}
+.ct-hero .btn{display:inline-block;margin-top:22px}
+.ct-art{max-width:220px;justify-self:end;width:100%;color:var(--blue)}
+.ct-layout{display:grid;grid-template-columns:.8fr 1.2fr;gap:28px;align-items:start}
+.ct-card{background:rgba(255,255,255,.94);border:1px solid #fff;border-radius:26px;padding:30px;box-shadow:0 20px 50px rgba(31,107,255,.12)}
+.ct-card h2{font-size:24px;letter-spacing:-.5px;margin-bottom:14px}
+.ct-list{list-style:none;display:grid;gap:14px}
+.ct-list small{display:block;color:var(--ink);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.ct-list a{color:var(--blue);font-weight:700;text-decoration:none;word-break:break-word}
+.ct-list a:hover{text-decoration:underline}
+.ct-form{display:grid;gap:18px}
+.ct-form .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ct-form label{font-weight:700;display:block;margin-bottom:6px;font-size:15px}
+.ct-form .opt{font-weight:500;color:var(--ink)}
+.ct-form input,.ct-form select,.ct-form textarea{font:inherit;font-weight:500;padding:13px 14px;border:1.5px solid #c5d6f3;border-radius:12px;background:#fff;color:var(--navy);width:100%}
+.ct-form [aria-invalid=true]{border-color:#c0392b}
+.ct-err{color:#9b1c1c;font-size:13px;font-weight:600;min-height:0}
+.ct-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.ct-form button[type=submit]{justify-self:start;border:0;cursor:pointer;font:inherit;font-weight:700}
+.ct-form button[disabled]{opacity:.65;cursor:not-allowed}
+.ct-status{padding:14px 16px;border-radius:12px;font-weight:600;line-height:1.5}
+.ct-status.ok{background:#e9fbf2;color:#0b6b43;border:1px solid #9be0c0}
+.ct-status.bad{background:#fdecec;color:#9b1c1c;border:1px solid #f1b5b5}
+.ct-status.info{background:#f3f8ff;color:var(--navy);border:1px solid #c5d6f3}
+.ct-note{font-size:14px;color:var(--ink);line-height:1.6}
+@media(max-width:800px){.ct-hero,.ct-layout,.ct-form .row{grid-template-columns:1fr}.ct-art{justify-self:start;max-width:140px}.ct-card{padding:22px}}
