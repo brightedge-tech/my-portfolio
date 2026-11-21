@@ -14,6 +14,12 @@
     if (!l.length) return "";
     return '<ul class="social" aria-label="Professional links">' + l.map(function (s) { return '<li><a href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.label) + " \u2197</a></li>"; }).join("") + "</ul>";
   }
+  function contact() {
+    var c = [];
+    if (P.email) c.push('<a href="mailto:' + esc(P.email) + '">' + esc(P.email) + "</a>");
+    if (P.phone) c.push('<a href="tel:' + esc(P.phone.replace(/[^+\d]/g, "")) + '">' + esc(P.phone) + "</a>");
+    return c.length ? '<p class="cv-contact">' + c.join(" \u00b7 ") + "</p>" : "";
+  }
   function cvBtn(cls) {
     return P.cvPdf ? '<a class="btn ' + (cls || "b1") + '" href="' + ROOT + esc(P.cvPdf) + '" download>Download My CV</a>' : "";
   }
@@ -34,14 +40,19 @@
 
   function cv(r) {
     var h = '<header class="cv-head"><div><p class="kicker">Curriculum Vitae</p><h1>' + esc(P.name) + '<span class="role">' + esc(P.title) + '</span></h1></div><div class="pj-actions">' +
-      (P.cvPdf ? cvBtn("b1") : '<span class="todo" role="status">CV PDF not yet available</span>') + "</div></header>" + social();
+      (P.cvPdf ? cvBtn("b1") : '<span class="todo" role="status">CV PDF not yet available</span>') + "</div></header>" + contact() + social();
     h += sec("summary", "Professional summary", "<p>" + esc(P.summary) + "</p>");
-    h += sec("skills", "Technical skills", '<p class="muted">Technologies demonstrated in portfolio projects, not proficiency levels. <a href="' + ROOT + 'skills/">See the full skills page</a>.</p><dl class="skills">' + window.SKILL_CATEGORIES.map(function (c) { var it = window.SKILLS.filter(function (s) { return s.category === c.id && s.status !== "hidden"; }); return it.length ? "<div><dt>" + esc(c.name) + '</dt><dd><ul class="tags">' + it.map(function (s) { return "<li>" + esc(s.name) + "</li>"; }).join("") + "</ul></dd></div>" : ""; }).join("") + "</dl>");
-    h += sec("experience", "Professional experience", (window.EXPERIENCE || []).length ? window.EXPERIENCE.map(function (e) { return '<article class="cv-item"><h3>' + esc(e.title) + '</h3><p class="muted">' + esc(e.organization) + " \u00b7 " + esc([e.start, e.end].filter(Boolean).join(" \u2013 ")) + "</p>" + (e.responsibilities && e.responsibilities.length ? '<ul class="cs-list">' + e.responsibilities.map(function (b) { return "<li>" + esc(b) + "</li>"; }).join("") + "</ul>" : "") + "</article>"; }).join("") : todo("Experience details to be added in profile-data.js."));
+    h += sec("skills", "Technical skills", '<dl class="skills">' + P.skills.map(function (g) { return "<div><dt>" + esc(g.group) + '</dt><dd><ul class="tags">' + g.items.map(function (i) { return "<li>" + esc(i) + "</li>"; }).join("") + "</ul></dd></div>"; }).join("") + '</dl><p class="muted"><a href="' + ROOT + 'skills/">See skills demonstrated in portfolio projects</a></p>');
+    h += sec("experience", "Professional experience", P.experience.length ? P.experience.map(function (e) {
+      var meta = [e.organization, e.type, e.location].filter(Boolean).map(esc).join(" \u00b7 ") + " \u00b7 " + esc([e.start, e.end].filter(Boolean).join(" \u2013 "));
+      return '<article class="cv-item"><h3>' + esc(e.title) + '</h3><p class="muted">' + meta + "</p>" + (e.responsibilities && e.responsibilities.length ? '<ul class="cs-list">' + e.responsibilities.map(function (b) { return "<li>" + esc(b) + "</li>"; }).join("") + "</ul>" : "") +
+        (e.achievements && e.achievements.length ? "<h4>Achievements</h4>" + '<ul class="cs-list">' + e.achievements.map(function (b) { return "<li>" + esc(b) + "</li>"; }).join("") + "</ul>" : "") + "</article>";
+    }).join("") : todo("Experience details to be added in profile-data.js."));
     var pj = window.PROJECTS.filter(function (p) { return p.published; });
     h += sec("projects", "Projects", '<ul class="cs-list rel">' + pj.map(function (p) { return '<li><a href="' + ROOT + "projects/" + p.slug + '/">' + esc(p.title) + "</a></li>"; }).join("") + "</ul>");
     h += sec("education", "Education", P.education.length ? P.education.map(function (e) { return '<article class="cv-item"><h3>' + esc(e.qualification) + '</h3><p class="muted">' + esc(e.institution) + " \u00b7 " + esc(e.period) + "</p></article>"; }).join("") : todo("Education details to be added in profile-data.js."));
     if (P.certifications.length) h += sec("certs", "Certifications", '<ul class="cs-list">' + P.certifications.map(function (c) { return "<li>" + esc(c.name) + " \u2014 " + esc(c.issuer) + (c.year ? " (" + esc(c.year) + ")" : "") + "</li>"; }).join("") + "</ul>");
+    if (P.languages && P.languages.length) h += sec("languages", "Languages", '<ul class="cs-list">' + P.languages.map(function (l) { return "<li>" + esc(l.name) + " \u2014 " + esc(l.level) + "</li>"; }).join("") + "</ul>");
     r.innerHTML = h;
   }
 

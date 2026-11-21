@@ -89,20 +89,20 @@ P.forEach(p => w(`projects/${p.slug}/index.html`, page({
 })));
 
 w("about/index.html", page({
-  root: "../", active: "about", profile: true, scripts: ["skills-data", "experience-data"], bodyAttr: 'data-page="about"',
+  root: "../", active: "about", profile: true, bodyAttr: 'data-page="about"',
   title: "About | Ayeah Derrick Nsom-M – Cloud & DevOps Engineer",
   desc: "About Ayeah Derrick Nsom-M, Cloud & DevOps Engineer: cloud engineering, infrastructure automation and delivery.",
   main: `<div class="container" id="profile-root"><noscript><p class="error">Please enable JavaScript to view this page.</p></noscript></div>`
 }));
 w("cv/index.html", page({
-  root: "../", active: "cv", profile: true, scripts: ["skills-data", "experience-data"], bodyAttr: 'data-page="cv"',
+  root: "../", active: "cv", profile: true, bodyAttr: 'data-page="cv"',
   title: "CV | Ayeah Derrick Nsom-M – Cloud & DevOps Engineer",
   desc: "Curriculum vitae of Ayeah Derrick Nsom-M, Cloud & DevOps Engineer.",
   main: `<div class="container" id="profile-root"><noscript><p class="error">Please enable JavaScript to view this page.</p></noscript></div>`
 }));
 
 w("experience/index.html", page({
-  root: "../", active: "exp", scripts: ["experience-data", "experience"],
+  root: "../", active: "exp", scripts: ["profile-data", "experience"],
   title: "Experience | Ayeah Derrick Nsom-M – Cloud & DevOps Engineer",
   desc: "Professional experience of Ayeah Derrick Nsom-M, Cloud & DevOps Engineer.",
   main: `<div class="page-hero"><p class="kicker">Experience</p><h1>Professional experience.</h1><p>Ayeah Derrick Nsom-M — Cloud &amp; DevOps Engineer.</p></div>
