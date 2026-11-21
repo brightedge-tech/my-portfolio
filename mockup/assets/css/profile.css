@@ -17,3 +17,5 @@
 @media(max-width:800px){.about-hero{grid-template-columns:1fr}.about-photo{max-width:220px}}
 @media print{nav,.glow,.skip,footer,.cta-band,.nav-toggle{display:none!important}body{background:#fff}.cs-sec{box-shadow:none;border:1px solid #ddd;break-inside:avoid}}
 .about-hero h1,.cv-head h1{text-wrap:balance}
+.cv-contact{margin:6px 0 4px;color:var(--ink);font-weight:600}.cv-contact a{color:var(--blue)}
+.cv-item h4{margin:12px 0 4px}
