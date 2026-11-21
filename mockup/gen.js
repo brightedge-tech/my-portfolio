@@ -1,6 +1,7 @@
 /* One-off generator for static page shells. Run: node gen.js */
 const fs = require("fs"), path = require("path");
-global.window = {}; require("./assets/js/services-data.js");
+global.window = {}; require("./assets/js/services-data.js"); require("./assets/js/projects-data.js");
+const P = window.PROJECTS;
 const S = window.SERVICES;
 
 function nav(root, active) {
@@ -11,7 +12,7 @@ function nav(root, active) {
   <ul id="nav-menu">
     ${a(root + "index.html", "Welcome", "welcome")}
     ${a("#", "CV", "cv")}
-    ${a("#", "Projects", "projects")}
+    ${a(root + "projects/", "Projects", "projects")}
     ${a(root + "services/", "Services", "services")}
     ${a("#", "Blog", "blog")}
     ${a("#", "Experience", "exp")}
@@ -20,7 +21,7 @@ function nav(root, active) {
   </ul>
 </nav>`;
 }
-function page({ root, title, desc, active, bodyAttr = "", main }) {
+function page({ root, title, desc, active, bodyAttr = "", main, projects = false }) {
   return `<!DOCTYPE html>
 <html lang="en" data-root="${root}">
 <head>
@@ -30,6 +31,7 @@ function page({ root, title, desc, active, bodyAttr = "", main }) {
 <meta name="description" content="${desc}">
 <link rel="stylesheet" href="${root}styles.css">
 <link rel="stylesheet" href="${root}assets/css/services.css">
+<link rel="stylesheet" href="${root}assets/css/projects.css">
 </head>
 <body ${bodyAttr}>
 <a class="skip" href="#main">Skip to content</a>
@@ -41,7 +43,9 @@ ${main}
 <footer>© Ayeah Derrick Nsom-M · Cloud &amp; DevOps Engineer</footer>
 <script src="${root}assets/js/services-data.js"></script>
 <script src="${root}assets/js/tech-data.js"></script>
-<script src="${root}assets/js/app.js"></script>
+<script src="${root}assets/js/app.js"></script>${projects ? `
+<script src="${root}assets/js/projects-data.js"></script>
+<script src="${root}assets/js/projects.js"></script>` : ""}
 </body>
 </html>
 `;
@@ -61,6 +65,20 @@ S.forEach(s => w(`services/${s.slug}/index.html`, page({
   title: `${s.title} | Services | Ayeah Derrick Nsom-M`,
   desc: s.short,
   main: `<div id="service-root"><noscript><p class="error">Please enable JavaScript to view this service.</p></noscript></div>`
+})));
+
+w("projects/index.html", page({
+  root: "../", active: "projects", projects: true,
+  title: "Projects | Ayeah Derrick Nsom-M – Cloud & DevOps Engineer",
+  desc: "Case studies: AWS Terraform architecture, a DevSecOps pipeline on EKS, cloud optimization, NSOMEX Connect and NSOMEX Group.",
+  main: `<div class="page-hero"><p class="kicker">Projects</p><h1>Engineering and technology case studies.</h1><p>Five featured projects across cloud infrastructure, DevSecOps, optimization and digital products.</p></div>
+<div class="container"><noscript><p class="error">Please enable JavaScript to view the projects.</p></noscript><div class="pj-grid" id="projects-grid" aria-live="polite"></div></div>`
+}));
+P.forEach(p => w(`projects/${p.slug}/index.html`, page({
+  root: "../../", active: "projects", projects: true, bodyAttr: `data-project="${p.slug}"`,
+  title: `${p.title} | Projects | Ayeah Derrick Nsom-M`,
+  desc: p.short,
+  main: `<div class="container" id="project-root"><noscript><p class="error">Please enable JavaScript to view this project.</p></noscript></div>`
 })));
 
 w("contact.html", page({
